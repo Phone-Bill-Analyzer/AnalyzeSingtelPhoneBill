@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-4571712644338430/8228799505" />
+    
+    <Spinner
+        android:id="@+id/analysis_type"
+        android:layout_width="match_parent"
+        android:layout_margin="10sp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:entries="@array/analysis_type" />
+    
+    <WebView
+        android:id="@+id/webview"
+        android:layout_above="@id/adView"
+        android:layout_below="@id/analysis_type"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+    </WebView>
+
+</RelativeLayout>

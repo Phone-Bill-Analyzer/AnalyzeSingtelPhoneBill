@@ -1,0 +1,47 @@
+<html>
+	<head>
+
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+		<script type="text/javascript">
+    
+			google.load('visualization', '1.0', {'packages':['corechart']});
+
+			google.setOnLoadCallback(drawCharts);
+
+			function drawCharts() {
+			
+				drawPieChart();
+			}
+			
+			function drawPieChart() {
+			
+				var jsonData = JSON.parse(App.getTop5ContactsByAmount());
+				
+				var data = new google.visualization.DataTable();
+				data.addColumn('string', 'Contact');
+				data.addColumn('number', 'Amount');
+				
+				for(var i=0; i< jsonData.length; i++){
+					var amt = Math.round(jsonData[i].amount * 100) / 100;
+					data.addRow([jsonData[i].contact,amt]);
+				}
+				
+				var options = {'title':'Cost Summarization',
+								'legend':{position:'top',maxLines:3},
+								'pieSliceText':'value'};
+
+				var chart = new google.visualization.PieChart(document.getElementById('pie_chart'));
+				chart.draw(data, options);
+			}
+		
+		</script>
+	
+	</head>
+
+	<body>
+
+		<div id="pie_chart" style="width:100%; height:100%"></div>
+
+	</body>
+	
+</html>

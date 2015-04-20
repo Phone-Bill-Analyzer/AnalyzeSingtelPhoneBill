@@ -1,0 +1,26 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" tools:context=".Main">
+
+    <item
+        android:id="@+id/Help"
+        android:icon="@mipmap/help"
+        app:showAsAction="ifRoom"
+        android:title="@string/help"></item>
+    <item
+        android:id="@+id/settings"
+        android:icon="@mipmap/settings"
+        app:showAsAction="ifRoom"
+        android:title="@string/action_settings" />
+    <item
+        android:id="@+id/ReloadContacts"
+        android:icon="@mipmap/ic_action_refresh"
+        app:showAsAction="withText"
+        android:title="@string/reload_contacts"></item>
+    <item
+        android:id="@+id/About"
+        android:icon="@mipmap/about"
+        app:showAsAction="ifRoom"
+        android:title="@string/about"></item>
+
+</menu>

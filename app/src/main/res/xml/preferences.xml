@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <CheckBoxPreference
+        android:key="include_discounted_calls"
+        android:title="@string/inc_disc_calls"
+        android:summary="@string/inc_disc_calls_summ"
+        android:defaultValue="true" />
+    
+</PreferenceScreen>
