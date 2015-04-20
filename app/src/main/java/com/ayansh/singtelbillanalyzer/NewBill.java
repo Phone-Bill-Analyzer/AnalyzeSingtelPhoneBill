@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.View;
@@ -29,6 +30,7 @@ import org.varunverma.CommandExecuter.Invoker;
 import org.varunverma.CommandExecuter.ProgressInfo;
 import org.varunverma.CommandExecuter.ResultObject;
 
+import java.io.File;
 import java.util.Iterator;
 
 public class NewBill extends Activity implements OnClickListener, Invoker {
@@ -150,9 +152,11 @@ public class NewBill extends Activity implements OnClickListener, Invoker {
 	}
 
 	private void selectFile() {
-		
-		Intent fileSelect = new Intent(Intent.ACTION_GET_CONTENT); 
-		fileSelect.setType("*/*"); 
+
+        File file = Environment.getExternalStorageDirectory();
+
+		Intent fileSelect = new Intent(Intent.ACTION_GET_CONTENT);
+		fileSelect.setDataAndType(Uri.fromFile(file), "*/*");
 		fileSelect.addCategory(Intent.CATEGORY_OPENABLE);
 
 	    try {
