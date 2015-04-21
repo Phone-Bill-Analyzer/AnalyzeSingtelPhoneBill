@@ -39,16 +39,12 @@ public class ReadPDFFileCommand extends Command {
 		switch(billType){
 		
 		case 0:
-			type = "APPM";
+			type = "STPPM";
 			break;
-			
-		case 1:
-			type = "VPPM";
-			break;
-			
-		case 2:
-			type = "RPPM";
-			break;
+
+        default:
+            type = "STPPM";
+            break;
 		
 		}
 		
