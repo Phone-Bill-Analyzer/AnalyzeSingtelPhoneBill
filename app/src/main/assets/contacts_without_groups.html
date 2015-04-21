@@ -1,0 +1,37 @@
+<html>
+	<head>
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+		<script type="text/javascript">
+    
+			google.load('visualization', '1.0', {'packages':['table']});
+
+			google.setOnLoadCallback(drawTable);
+			
+			function drawTable() {
+			
+				var data = new google.visualization.DataTable();
+				data.addColumn('string', 'Phone Number');
+
+				var jsonData = JSON.parse(App.getContactsWithoutNames());
+				
+				for(var i=0; i< jsonData.length; i++){
+					data.addRow([jsonData[i].name]);
+				}
+
+				var table = new google.visualization.Table(document.getElementById('data_table'));
+				table.draw(data, {showRowNumber: true});
+				
+			}
+		
+		</script>
+	
+	</head>
+
+	<body>
+	
+		<!--Div that will hold the pie chart-->
+		<div id="data_table" style="width:100%; height:100%"></div>
+
+	</body>
+	
+</html>
