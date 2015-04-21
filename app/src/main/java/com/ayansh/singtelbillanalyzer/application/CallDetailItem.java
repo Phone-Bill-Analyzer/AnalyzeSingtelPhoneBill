@@ -13,7 +13,7 @@ public class CallDetailItem {
 	public CallDetailItem(){
 		callDate = callTime = phoneNumber = duration = comments = "";
 		cost = 0;
-		freeCall = roamingCall = smsCall = stdCall = "";
+		freeCall = roamingCall = smsCall = stdCall = callDirection = "";
 		pulse = 0;
 	}
 	
@@ -21,7 +21,7 @@ public class CallDetailItem {
 
 		callDate = callTime = phoneNumber = duration = comments = "";
 		cost = 0;
-		freeCall = roamingCall = smsCall = stdCall = "";
+		freeCall = roamingCall = smsCall = stdCall = callDirection = "";
 		pulse = 0;
 		
 		try {
@@ -32,6 +32,7 @@ public class CallDetailItem {
 			duration = cd.getString("duration");
 			cost = (float) cd.getDouble("cost");
 			comments = cd.getString("comments");
+            callDirection = cd.getString("callDirection");
 
 			setFreeCall(cd.getString("freeCall"));
 			setRoamingCall(cd.getString("roamingCall"));

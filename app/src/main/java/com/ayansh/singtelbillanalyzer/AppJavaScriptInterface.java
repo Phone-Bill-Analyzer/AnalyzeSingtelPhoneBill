@@ -32,5 +32,18 @@ public class AppJavaScriptInterface {
 		return bill.getSummaryByContactNames().toString();
 		
 	}
-	
+
+    @JavascriptInterface
+    public String getContactsWithoutNames(){
+
+        return bill.getContactsWithoutNames().toString();
+
+    }
+
+    @JavascriptInterface
+    public String getContactsWithoutGroups(){
+
+        return bill.getContactsWithoutGroups().toString();
+
+    }
 }

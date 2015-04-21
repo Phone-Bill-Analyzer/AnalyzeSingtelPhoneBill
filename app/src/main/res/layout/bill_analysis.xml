@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-4571712644338430/8228799505" />
+        ads:adUnitId="ca-app-pub-4571712644338430/9740035102" />
     
     <Spinner
         android:id="@+id/analysis_type"

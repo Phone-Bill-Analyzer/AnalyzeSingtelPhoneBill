@@ -253,7 +253,8 @@ public class PhoneBill {
 					"'" + cdi.getCallTime() + "'," +
 					"'" + cdi.getDuration() + "'," +
 					"" + cdi.getCost() + "," +
-					"'" + cdi.getComments() + "'," +
+                    "'" + cdi.getCallDirection() + "'," +
+                    "'" + cdi.getComments() + "'," +
 					"'" + cdi.getFreeCall() + "'," +
 					"'" + cdi.getRoamingCall() + "'," +
 					"'" + cdi.getSmsCall() + "'," +
@@ -438,5 +439,78 @@ public class PhoneBill {
 		
 		return resultData;
 	}
-	
+
+    public JSONArray getContactsWithoutNames(){
+
+        SBAApplicationDB appDB = SBAApplicationDB.getInstance();
+
+        String query = "SELECT distinct cd.PhoneNo, names.Name FROM BillCallDetails as cd " +
+                "left outer join ContactNames as names on cd.PhoneNo = names.PhoneNo " +
+                "where cd.PhoneNo <> 'data' and names.Name is null order by cd.PhoneNo";
+
+        Cursor cursor = appDB.rawQuery(query);
+
+        JSONArray resultData = new JSONArray();
+
+        if(cursor.moveToFirst()){
+
+            do{
+
+                JSONObject data = new JSONObject();
+
+                try {
+
+                    data.put("name", cursor.getString(0));
+                    resultData.put(data);
+
+                } catch (JSONException e) {
+                    // Ignore.
+                }
+
+            } while(cursor.moveToNext());
+
+        }
+
+        cursor.close();
+
+        return resultData;
+    }
+
+    public JSONArray getContactsWithoutGroups(){
+
+        SBAApplicationDB appDB = SBAApplicationDB.getInstance();
+
+        String query = "SELECT distinct cd.PhoneNo, names.Name, groups.GroupName FROM BillCallDetails as cd " +
+                "left outer join ContactNames as names on cd.PhoneNo = names.PhoneNo " +
+                "left outer join ContactGroups as groups on cd.PhoneNo = groups.PhoneNo " +
+                "where cd.PhoneNo <> 'data' and groups.GroupName is null order by cd.PhoneNo";
+
+        Cursor cursor = appDB.rawQuery(query);
+
+        JSONArray resultData = new JSONArray();
+
+        if(cursor.moveToFirst()){
+
+            do{
+
+                JSONObject data = new JSONObject();
+
+                try {
+
+                    data.put("phone", cursor.getString(0));
+                    data.put("name", cursor.getString(1));
+                    resultData.put(data);
+
+                } catch (JSONException e) {
+                    // Ignore.
+                }
+
+            } while(cursor.moveToNext());
+
+        }
+
+        cursor.close();
+
+        return resultData;
+    }
 }

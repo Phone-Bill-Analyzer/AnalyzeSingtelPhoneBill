@@ -10,18 +10,16 @@
 			function drawTable() {
 			
 				var data = new google.visualization.DataTable();
-				data.addColumn('string', 'Name');
-				data.addColumn('number', 'Amount');
-				
-				var jsonData = JSON.parse(App.getSummaryByContactNames());
+				data.addColumn('string', 'Phone Number');
+
+				var jsonData = JSON.parse(App.getContactsWithoutNames());
 				
 				for(var i=0; i< jsonData.length; i++){
-					var amt = Math.round(jsonData[i].amount * 100) / 100;
-					data.addRow([jsonData[i].name,amt]);
+					data.addRow([jsonData[i].name]);
 				}
 
 				var table = new google.visualization.Table(document.getElementById('data_table'));
-				table.draw(data, {showRowNumber: false});
+				table.draw(data, {showRowNumber: true});
 				
 			}
 		
