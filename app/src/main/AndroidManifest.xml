@@ -65,6 +65,15 @@
         </activity>
 
         <activity
+            android:name=".CompareBills"
+            android:exported="false"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.COMPARE_BILLS" />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name=".SettingsActivity"
             android:exported="false"
             android:label="@string/app_name" >

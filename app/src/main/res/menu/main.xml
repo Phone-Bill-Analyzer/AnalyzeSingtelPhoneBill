@@ -3,6 +3,12 @@
     tools:ignore="AppCompatResource">
 
     <item
+        android:id="@+id/Analyze"
+        android:icon="@mipmap/analyze"
+        android:showAsAction="ifRoom"
+        android:title="@string/help"></item>
+
+    <item
         android:id="@+id/Help"
         android:icon="@mipmap/help"
         android:showAsAction="ifRoom"

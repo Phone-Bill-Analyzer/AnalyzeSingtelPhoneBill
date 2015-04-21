@@ -27,5 +27,8 @@
         <item>Contacts without Names</item>
         <item>Contacts not belonging to Group</item>
     </string-array>
+    <string-array name="bill_comparision_types">
+        <item>Compare Monthly Usage</item>
+    </string-array>
 
 </resources>

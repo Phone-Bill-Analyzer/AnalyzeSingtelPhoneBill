@@ -100,6 +100,11 @@ public class Main extends Activity implements OnItemClickListener, Invoker {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
+
+        if (!Constants.isPremiumVersion()) {
+            menu.findItem(R.id.Analyze).setVisible(false);
+        }
+
 		menu.findItem(R.id.DownloaDB).setVisible(true);
 		return true;
 	}
@@ -141,10 +146,21 @@ public class Main extends Activity implements OnItemClickListener, Invoker {
 			SBAApplication.getInstance().downloaDBData();
 			break;
 
+        case R.id.Analyze:
+            compareBills();
+            break;
+
 		}
 		
 		return true;
 	}
+
+    private void compareBills(){
+
+        Intent compareBills = new Intent(Main.this, CompareBills.class);
+        Main.this.startActivity(compareBills);
+
+    }
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {

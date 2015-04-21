@@ -3,6 +3,7 @@ package com.ayansh.singtelbillanalyzer;
 import android.webkit.JavascriptInterface;
 
 import com.ayansh.singtelbillanalyzer.application.PhoneBill;
+import com.ayansh.singtelbillanalyzer.application.SBAApplication;
 
 public class AppJavaScriptInterface {
 
@@ -46,4 +47,12 @@ public class AppJavaScriptInterface {
         return bill.getContactsWithoutGroups().toString();
 
     }
+
+    @JavascriptInterface
+    public String compareMonthlyUsage(){
+
+        return SBAApplication.getInstance().getMonthlyComparision().toString();
+
+    }
+
 }

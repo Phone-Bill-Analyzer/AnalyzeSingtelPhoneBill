@@ -14,6 +14,7 @@ import android.util.Log;
 import com.ayansh.singtelbillanalyzer.SettingsActivity;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -380,6 +381,60 @@ public class SBAApplication {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+    }
+
+    public JSONArray getMonthlyComparision(){
+
+        SBAApplicationDB appDB = SBAApplicationDB.getInstance();
+
+        String query = "select inb.BillDate, InAmt, OutAmt from " +
+                "(select bill.BillNo, bill.BillDate, cd.CallDirection, sum(cd.Amount) as InAmt " +
+                "from BillMetaData as bill inner join BillCallDetails as cd on bill.BillNo = cd.BillNo " +
+                "where cd.CallDirection = 'In' group by bill.BillDate) as inb " +
+
+                "inner join " +
+                "(select bill.BillNo, bill.BillDate, cd.CallDirection, sum(cd.Amount) as OutAmt " +
+                "from BillMetaData as bill inner join BillCallDetails as cd on bill.BillNo = cd.BillNo " +
+                "where cd.CallDirection = 'Out' group by bill.BillDate) as outb " +
+
+                "on inb.BillNo = outb.BillNo order by inb.BillNo";
+
+        Cursor cursor = appDB.rawQuery(query);
+
+        JSONArray resultData = new JSONArray();
+
+        if(cursor.moveToFirst()){
+
+            do{
+
+                JSONObject data = new JSONObject();
+
+                try {
+
+                    data.put("date", cursor.getString(0));
+
+                    double amt = cursor.getDouble(1);
+                    float amount = (float) (Math.round(amt * 100.00) / 100.00);
+                    data.put("inamt", amount);
+
+                    amt = cursor.getDouble(2);
+                    amount = (float) (Math.round(amt * 100.00) / 100.00);
+                    data.put("outamt", amount);
+
+                    resultData.put(data);
+
+                } catch (JSONException e) {
+                    // Ignore.
+                }
+
+            } while(cursor.moveToNext());
+
+        }
+
+        cursor.close();
+
+        return resultData;
 
     }
 
