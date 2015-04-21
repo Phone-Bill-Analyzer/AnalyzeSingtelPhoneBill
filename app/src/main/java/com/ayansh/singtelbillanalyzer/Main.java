@@ -54,7 +54,7 @@ public class Main extends Activity implements OnItemClickListener, Invoker {
 			// Show Ad.
 			AdRequest adRequest = new AdRequest.Builder()
 			.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-			.addTestDevice("9BAEE2C71E47F042ABCEDE3FCEF2E9D5").build();
+			.addTestDevice("9F11CAC92EB404500CAA3F8B0BBA5277").build();
 
 			AdView adView = (AdView) findViewById(R.id.adView);
 
@@ -100,7 +100,7 @@ public class Main extends Activity implements OnItemClickListener, Invoker {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
-		//menu.findItem(R.id.DownloaDB).setVisible(false);
+		menu.findItem(R.id.DownloaDB).setVisible(false);
 		return true;
 	}
 	
@@ -137,11 +137,9 @@ public class Main extends Activity implements OnItemClickListener, Invoker {
 			ce.execute(command);
 			break;
 
-        /*
 		case R.id.DownloaDB:
-			PBAApplication.getInstance().downloaDBData();
+			SBAApplication.getInstance().downloaDBData();
 			break;
-		//*/
 
 		}
 		

@@ -47,6 +47,8 @@ public class NewBill extends Activity implements OnClickListener, Invoker {
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.new_bill);
+
+        setTitle("Upload Bill");
 		
 		// Show Ads
 		if (!Constants.isPremiumVersion()) {
@@ -54,7 +56,7 @@ public class NewBill extends Activity implements OnClickListener, Invoker {
 			// Show Ad.
 			AdRequest adRequest = new AdRequest.Builder()
 			.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-			.addTestDevice("9BAEE2C71E47F042ABCEDE3FCEF2E9D5").build();
+			.addTestDevice("9F11CAC92EB404500CAA3F8B0BBA5277").build();
 
 			AdView adView = (AdView) findViewById(R.id.adView);
 
@@ -66,6 +68,7 @@ public class NewBill extends Activity implements OnClickListener, Invoker {
 		fileName.setOnClickListener(this);
 		
 		password = (EditText) findViewById(R.id.pwd);
+        password.setVisibility(View.GONE);  // Hide it.
 		
 		Button uploadButton = (Button) findViewById(R.id.upload);
 		uploadButton.setOnClickListener(this);

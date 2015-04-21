@@ -50,7 +50,7 @@ public class AnaylzeBill extends Activity implements OnItemSelectedListener {
 			// Show Ad.
 			AdRequest adRequest = new AdRequest.Builder()
 					.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-					.addTestDevice("9BAEE2C71E47F042ABCEDE3FCEF2E9D5").build();
+					.addTestDevice("9F11CAC92EB404500CAA3F8B0BBA5277").build();
 			
 			AdView adView = (AdView) findViewById(R.id.adView);
 
@@ -143,7 +143,15 @@ public class AnaylzeBill extends Activity implements OnItemSelectedListener {
 		case 2:
 			getHTMLFromFile("contact_group_summary.html");
 			break;
-		
+
+        case 3:
+            getHTMLFromFile("contacts_without_names.html");
+            break;
+
+        case 4:
+            getHTMLFromFile("contacts_without_groups.html");
+            break;
+
 		}
 		
 		showFromRawSource();

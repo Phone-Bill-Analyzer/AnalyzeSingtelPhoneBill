@@ -66,10 +66,10 @@ public class ActivatePremiumFeatures extends Activity implements
 			finish();
 		}
 		
-		/*
+		//*
 		prodName.setText(Constants.getProductTitle());
 		prodDesc.setText(Constants.getProductDescription());
-		*/
+		//*/
 		
 		buy.setText(Constants.getProductPrice());
 		

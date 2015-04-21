@@ -11,11 +11,12 @@
 			
 				var data = new google.visualization.DataTable();
 				data.addColumn('string', 'Phone Number');
+				data.addColumn('string', 'Name');
 
-				var jsonData = JSON.parse(App.getContactsWithoutNames());
+				var jsonData = JSON.parse(App.getContactsWithoutGroups());
 				
 				for(var i=0; i< jsonData.length; i++){
-					data.addRow([jsonData[i].name]);
+					data.addRow([jsonData[i].phone,jsonData[i].name]);
 				}
 
 				var table = new google.visualization.Table(document.getElementById('data_table'));
