@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -59,6 +60,8 @@ public class CompareBills extends Activity implements OnItemSelectedListener {
 			adView.loadAd(adRequest);
 		}
 
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+
 		analysisType = (Spinner) findViewById(R.id.analysis_type);
 		analysisType.setOnItemSelectedListener(this);
 
@@ -75,6 +78,21 @@ public class CompareBills extends Activity implements OnItemSelectedListener {
 		webView.setWebViewClient(new myWebViewClient());
 		
 	}
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case android.R.id.home:
+                finish();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
 	
 	@Override
 	protected void onStart(){

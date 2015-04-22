@@ -50,6 +50,8 @@ public class ActivatePremiumFeatures extends Activity implements
 		
 		cancel = (Button) findViewById(R.id.cancel);
 		cancel.setOnClickListener(this);
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 				
 	}
 	
@@ -87,7 +89,7 @@ public class ActivatePremiumFeatures extends Activity implements
 				return true;
 				
 			default:
-	            return false;
+                return super.onOptionsItemSelected(item);
 		}
 		
 	}

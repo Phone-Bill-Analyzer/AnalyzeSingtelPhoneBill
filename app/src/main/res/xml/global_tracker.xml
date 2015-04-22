@@ -7,7 +7,7 @@
     <bool name="ga_autoActivityTracking">true</bool>
     
     <!-- Replace placeholder ID with your tracking ID -->
-    <string name="ga_trackingId" tools1:ignore="TypographyDashes">UA-52130169-4</string>
+    <string name="ga_trackingId" tools1:ignore="TypographyDashes">UA-52130169-8</string>
 
     <!-- Enable automatic exception tracking -->
     <bool name="ga_reportUncaughtExceptions">true</bool>

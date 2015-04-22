@@ -2,6 +2,7 @@ package com.ayansh.singtelbillanalyzer;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.view.MenuItem;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 
@@ -16,6 +17,8 @@ public class SettingsActivity extends PreferenceActivity {
         super.onCreate(savedInstanceState);
                 
         addPreferencesFromResource(R.xml.preferences);
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 	
 	@Override
@@ -31,5 +34,20 @@ public class SettingsActivity extends PreferenceActivity {
 		super.onStop();
 		GoogleAnalytics.getInstance(this).reportActivityStop(this);
 	}
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case android.R.id.home:
+                finish();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
 	
 }

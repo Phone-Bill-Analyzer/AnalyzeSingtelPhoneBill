@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -62,7 +63,9 @@ public class AnaylzeBill extends Activity implements OnItemSelectedListener {
 		if(pos < 0){
 			return;
 		}
-		
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+
 		analysisType = (Spinner) findViewById(R.id.analysis_type);
 		analysisType.setOnItemSelectedListener(this);
 		
@@ -78,6 +81,21 @@ public class AnaylzeBill extends Activity implements OnItemSelectedListener {
 		webView.setWebViewClient(new myWebViewClient());
 		
 	}
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case android.R.id.home:
+                finish();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
 	
 	@Override
 	protected void onStart(){
@@ -134,21 +152,24 @@ public class AnaylzeBill extends Activity implements OnItemSelectedListener {
 		case 0:
 			getHTMLFromFile("all_contacts_table.html");
 			break;
-			
-		case 1:
-			
+
+        case 1:
+            getHTMLFromFile("itemized_bill_details.html");
+            break;
+
+		case 2:
 			getHTMLFromFile("top_5_pie_chart.html");
 			break;
 			
-		case 2:
+		case 3:
 			getHTMLFromFile("contact_group_summary.html");
 			break;
 
-        case 3:
+        case 4:
             getHTMLFromFile("contacts_without_names.html");
             break;
 
-        case 4:
+        case 5:
             getHTMLFromFile("contacts_without_groups.html");
             break;
 

@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.webkit.WebView;
 
 import com.ayansh.singtelbillanalyzer.application.SBAApplication;
@@ -38,6 +39,8 @@ public class DisplayFile extends Activity {
         }
         
         this.setTitle(title);
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         
        	String fileName = getIntent().getStringExtra("File");
        	
@@ -58,6 +61,21 @@ public class DisplayFile extends Activity {
        	showFromRawSource();
        	
 	}
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case android.R.id.home:
+                finish();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
 	
 	@Override
 	protected void onStart(){

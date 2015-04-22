@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.OpenableColumns;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -49,6 +50,8 @@ public class NewBill extends Activity implements OnClickListener, Invoker {
 		setContentView(R.layout.new_bill);
 
         setTitle("Upload Bill");
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		// Show Ads
 		if (!Constants.isPremiumVersion()) {
@@ -80,6 +83,21 @@ public class NewBill extends Activity implements OnClickListener, Invoker {
 		showHelp();
 	}
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case android.R.id.home:
+                finish();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
+
 	@Override
 	protected void onStart(){
 		
@@ -96,19 +114,21 @@ public class NewBill extends Activity implements OnClickListener, Invoker {
 	
 	private void showHelp() {
 		
-		String help = "Note : Internet connectivity is required to analyze the bill "
+		String help = "Please Note : \n" +
+                "1. Internet connectivity is required to analyze the bill "
 				+ "because this app depends on Google Charts API"
-				+ "\n\n";
+				+ "\n";
 		
-		help = help + "Note : You will need a file browser app to browse files on "
-				+ "device and upload.\n\n";
+		help = help + "2. You will need a file browser app to browse files on "
+				+ "device and upload. " +
+                "If you don't have, we recommend to download ES File Explorer app\n";
 		
-		help = help + "Note : You must download and save the file on your phone. Only then "
-				+ "the app can read the file. Files from cache can't be read properly.\n\n";
+		help = help + "3. You must download and save the file on your phone. Only then "
+				+ "the app can read the file. Files from cache can't be read properly.\n";
 		
 		if (!Constants.isPremiumVersion()) {
 		
-			help = help + "Note : You are using the free version of the app.\n"
+			help = help + "4. You are using the free version of the app.\n"
 					+ "In this version, you can anlyze only 1 bill at a time.\n"
 					+ "Old bill will be deleted.";
 		}

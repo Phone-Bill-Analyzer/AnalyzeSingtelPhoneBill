@@ -21,7 +21,8 @@
         <item>PPM : Post Paid Mobile</item>
     </string-array>
     <string-array name="analysis_type">
-        <item>Itemised Bill</item>
+        <item>Itemised Bill - Summary</item>
+        <item>Itemised Bill - Details</item>
         <item>Top 5 callers by Name</item>
         <item>Call costs by Contact Group</item>
         <item>Contacts without Names</item>

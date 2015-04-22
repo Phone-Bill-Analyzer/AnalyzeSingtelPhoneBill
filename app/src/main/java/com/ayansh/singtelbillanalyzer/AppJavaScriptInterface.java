@@ -49,6 +49,13 @@ public class AppJavaScriptInterface {
     }
 
     @JavascriptInterface
+    public String getAllBillDetails(){
+
+        return bill.getAllBillDetails().toString();
+
+    }
+
+    @JavascriptInterface
     public String compareMonthlyUsage(){
 
         return SBAApplication.getInstance().getMonthlyComparision().toString();

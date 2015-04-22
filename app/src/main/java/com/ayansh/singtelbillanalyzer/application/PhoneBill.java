@@ -440,6 +440,64 @@ public class PhoneBill {
 		return resultData;
 	}
 
+    public JSONArray getAllBillDetails() {
+
+        SBAApplicationDB appDB = SBAApplicationDB.getInstance();
+
+        String query = "";
+
+        if(SBAApplication.getInstance().includeIncomingCalls()){
+
+            query = "select case when cn.Name is null then cd.PhoneNo else cn.Name end as n, "
+                    + "cd.CallDate, cd.CallTime, cd.Amount as Amount, cd.CallDirection from BillCallDetails as cd "
+                    + "left outer join ContactNames as cn on cd.PhoneNo = cn.PhoneNo "
+                    + "where cd.BillNo = '" + billNo + "' "
+                    + "order by n";
+        }
+        else{
+
+            query = "select case when cn.Name is null then cd.PhoneNo else cn.Name end as n, "
+                    + "cd.CallDate, cd.CallTime, cd.Amount as Amount, cd.CallDirection from BillCallDetails as cd "
+                    + "left outer join ContactNames as cn on cd.PhoneNo = cn.PhoneNo "
+                    + "where cd.BillNo = '" + billNo + "' "
+                    + "and cd.CallDirection <> 'In' "
+                    + "order by n";
+        }
+
+        Cursor cursor = appDB.rawQuery(query);
+
+        JSONArray resultData = new JSONArray();
+
+        if(cursor.moveToFirst()){
+
+            do{
+
+                JSONObject data = new JSONObject();
+
+                try {
+
+                    double amt = cursor.getDouble(3);
+                    float amount = (float) (Math.round(amt * 100.00) / 100.00);
+                    data.put("name", cursor.getString(0));
+                    data.put("date", cursor.getString(1));
+                    data.put("time", cursor.getString(2));
+                    data.put("amount", amount);
+                    data.put("direction", cursor.getString(3));
+                    resultData.put(data);
+
+                } catch (JSONException e) {
+                    // Ignore.
+                }
+
+            } while(cursor.moveToNext());
+
+        }
+
+        cursor.close();
+
+        return resultData;
+    }
+
     public JSONArray getContactsWithoutNames(){
 
         SBAApplicationDB appDB = SBAApplicationDB.getInstance();
