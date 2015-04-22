@@ -283,7 +283,7 @@ public class PhoneBill {
 		
 		String query = "";
 		
-		if(SBAApplication.getInstance().includeDiscountedCalls()){
+		if(SBAApplication.getInstance().includeIncomingCalls()){
 			
 			query = "select case when cn.Name is null then cd.PhoneNo else cn.Name end as n, "
 					+ "sum(cd.Amount) as Amount from BillCallDetails as cd "
@@ -297,7 +297,7 @@ public class PhoneBill {
 					+ "sum(cd.Amount) as Amount from BillCallDetails as cd "
 					+ "left outer join ContactNames as cn on cd.PhoneNo = cn.PhoneNo "
 					+ "where cd.BillNo = '" + billNo + "' "
-					+ "and cd.IsFreeCall <> 'X' "
+					+ "and cd.CallDirection <> 'In' "
 					+ "group by n order by Amount desc limit 5";
 		}
 		
@@ -337,7 +337,7 @@ public class PhoneBill {
 
 		String query = "";
 		
-		if(SBAApplication.getInstance().includeDiscountedCalls()){
+		if(SBAApplication.getInstance().includeIncomingCalls()){
 			
 			query = "select case when cg.GroupName is null then 'Others' else cg.GroupName end as GroupN, "
 					+ "sum(cd.Amount) as Amount from BillCallDetails as cd "
@@ -351,7 +351,7 @@ public class PhoneBill {
 					+ "sum(cd.Amount) as Amount from BillCallDetails as cd "
 					+ "left outer join (select distinct PhoneNo, GroupName from ContactGroups) as cg "
 					+ "on cd.PhoneNo = cg.PhoneNo where cd.BillNo = '" + billNo + "' "
-					+ "and cd.IsFreeCall <> 'X' group by GroupN order by Amount desc";
+					+ "and cd.CallDirection <> 'In' group by GroupN order by Amount desc";
 		}
 		
 		Cursor cursor = appDB.rawQuery(query);
@@ -391,7 +391,7 @@ public class PhoneBill {
 		
 		String query = "";
 		
-		if(SBAApplication.getInstance().includeDiscountedCalls()){
+		if(SBAApplication.getInstance().includeIncomingCalls()){
 			
 			query = "select case when cn.Name is null then cd.PhoneNo else cn.Name end as n, "
 					+ "sum(cd.Amount) as Amount from BillCallDetails as cd "
@@ -405,7 +405,7 @@ public class PhoneBill {
 					+ "sum(cd.Amount) as Amount from BillCallDetails as cd "
 					+ "left outer join ContactNames as cn on cd.PhoneNo = cn.PhoneNo "
 					+ "where cd.BillNo = '" + billNo + "' "
-					+ "and cd.IsFreeCall <> 'X' "
+					+ "and cd.CallDirection <> 'In' "
 					+ "group by n order by Amount desc";
 		}
 		
@@ -443,10 +443,19 @@ public class PhoneBill {
     public JSONArray getContactsWithoutNames(){
 
         SBAApplicationDB appDB = SBAApplicationDB.getInstance();
+        String query = "";
 
-        String query = "SELECT distinct cd.PhoneNo, names.Name FROM BillCallDetails as cd " +
-                "left outer join ContactNames as names on cd.PhoneNo = names.PhoneNo " +
-                "where cd.PhoneNo <> 'data' and names.Name is null order by cd.PhoneNo";
+        if(SBAApplication.getInstance().includeIncomingCalls()){
+            query = "SELECT distinct cd.PhoneNo, names.Name FROM BillCallDetails as cd " +
+                    "left outer join ContactNames as names on cd.PhoneNo = names.PhoneNo " +
+                    "where cd.PhoneNo <> 'data' and names.Name is null order by cd.PhoneNo";
+        }
+        else{
+            query = "SELECT distinct cd.PhoneNo, names.Name FROM BillCallDetails as cd " +
+                    "left outer join ContactNames as names on cd.PhoneNo = names.PhoneNo " +
+                    "where cd.PhoneNo <> 'data' and cd.CallDirection <> 'In' and names.Name is null " +
+                    "order by cd.PhoneNo";
+        }
 
         Cursor cursor = appDB.rawQuery(query);
 
@@ -479,11 +488,21 @@ public class PhoneBill {
     public JSONArray getContactsWithoutGroups(){
 
         SBAApplicationDB appDB = SBAApplicationDB.getInstance();
+        String query = "";
 
-        String query = "SELECT distinct cd.PhoneNo, names.Name, groups.GroupName FROM BillCallDetails as cd " +
-                "left outer join ContactNames as names on cd.PhoneNo = names.PhoneNo " +
-                "left outer join ContactGroups as groups on cd.PhoneNo = groups.PhoneNo " +
-                "where cd.PhoneNo <> 'data' and groups.GroupName is null order by cd.PhoneNo";
+        if(SBAApplication.getInstance().includeIncomingCalls()){
+            query = "SELECT distinct cd.PhoneNo, names.Name, groups.GroupName FROM BillCallDetails as cd " +
+                    "left outer join ContactNames as names on cd.PhoneNo = names.PhoneNo " +
+                    "left outer join ContactGroups as groups on cd.PhoneNo = groups.PhoneNo " +
+                    "where cd.PhoneNo <> 'data' and groups.GroupName is null order by cd.PhoneNo";
+        }
+        else{
+            query = "SELECT distinct cd.PhoneNo, names.Name, groups.GroupName FROM BillCallDetails as cd " +
+                    "left outer join ContactNames as names on cd.PhoneNo = names.PhoneNo " +
+                    "left outer join ContactGroups as groups on cd.PhoneNo = groups.PhoneNo " +
+                    "where cd.PhoneNo <> 'data' and cd.CallDirection <> 'In' and groups.GroupName is null " +
+                    "order by cd.PhoneNo";
+        }
 
         Cursor cursor = appDB.rawQuery(query);
 

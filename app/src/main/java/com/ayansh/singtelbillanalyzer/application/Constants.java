@@ -34,7 +34,7 @@ public class Constants {
 	}
 	
 	public static boolean isPremiumVersion(){
-		return true;
+		return premiumVersion;
 	}
 
 	/**

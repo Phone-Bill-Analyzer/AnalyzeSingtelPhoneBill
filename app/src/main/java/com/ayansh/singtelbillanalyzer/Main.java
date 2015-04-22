@@ -105,7 +105,14 @@ public class Main extends Activity implements OnItemClickListener, Invoker {
             menu.findItem(R.id.Analyze).setVisible(false);
         }
 
-		menu.findItem(R.id.DownloaDB).setVisible(true);
+        if(billList.size() > 1 && billList.get(1).getPhoneNumber().contentEquals("81277490")){
+            menu.findItem(R.id.DownloaDB).setVisible(true);
+            menu.findItem(R.id.Analyze).setVisible(true);
+        }
+        else{
+            menu.findItem(R.id.DownloaDB).setVisible(false);
+        }
+
 		return true;
 	}
 	

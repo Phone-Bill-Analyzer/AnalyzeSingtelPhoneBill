@@ -4,7 +4,7 @@
 		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 		<script type="text/javascript">
     
-			google.load('visualization', '1.1', {'packages':['bar']});
+			google.load('visualization', '1.1', {'packages':['corechart']});
 
 			google.setOnLoadCallback(drawCharts);
 
@@ -17,23 +17,26 @@
 			
 				var data = new google.visualization.DataTable();
 	            data.addColumn('string', 'Date');
-	            data.addColumn('number', 'inamt');
-	            data.addColumn('number', 'outamt');
+	            data.addColumn('number', 'Incoming');
+	            data.addColumn({type: 'number', role: 'annotation'});
+	            data.addColumn('number', 'Outgoing');
+	            data.addColumn({type: 'number', role: 'annotation'});
 
 				var jsonData = JSON.parse(App.compareMonthlyUsage());
 				
 				for(var i=0; i< jsonData.length; i++){
 					var inamt = Math.round(jsonData[i].inamt * 100) / 100;
 					var outamt = Math.round(jsonData[i].outamt * 100) / 100;
-					data.addRow([jsonData[i].date,inamt,outamt]);
+					data.addRow([jsonData[i].date,inamt,inamt,outamt,outamt]);
 				}
-								
-				var options = {
-				    chart: {    title: 'Monthly Comparision'    },
-                    bars: 'horizontal'
-                };
 
-				var chart = new google.charts.Bar(document.getElementById('bar_chart'));
+                var options = {
+                    title: 'Monthly comparison',
+                    legend:{position:'bottom'},
+					bars: 'horizontal'
+				};
+
+				var chart = new google.visualization.BarChart(document.getElementById('bar_chart'));
 				chart.draw(data, options);
 			}
 			

@@ -7,7 +7,7 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 
 public class SettingsActivity extends PreferenceActivity {
 
-	public static final String INC_DISC_CALLS = "include_discounted_calls";
+	public static final String INC_INCOMING_CALLS = "include_incoming_calls";
 	
 	@SuppressWarnings("deprecation")
 	@Override

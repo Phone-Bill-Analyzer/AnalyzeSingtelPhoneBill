@@ -83,10 +83,10 @@ public class SBAApplication {
         return Options;
     }
 
-    boolean includeDiscountedCalls(){
+    boolean includeIncomingCalls(){
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-        boolean include = sharedPref.getBoolean(SettingsActivity.INC_DISC_CALLS, true);
+        boolean include = sharedPref.getBoolean(SettingsActivity.INC_INCOMING_CALLS, true);
 
         return include;
 

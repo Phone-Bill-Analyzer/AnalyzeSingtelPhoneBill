@@ -31,6 +31,16 @@ public class SplashScreen extends Activity implements IabHelper.OnIabSetupFinish
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen);
 
+        TextView versionInfo = (TextView) findViewById(R.id.version);
+
+        try{
+            String versionName = "Version: ";
+            versionName += getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+            versionInfo.setText(versionName);
+        }catch(Exception e){
+            // Ignore error.
+        }
+
         statusView = (TextView) findViewById(R.id.status);
         statusView.setText("Initializing");
 

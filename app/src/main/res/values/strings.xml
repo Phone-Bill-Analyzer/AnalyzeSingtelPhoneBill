@@ -14,8 +14,8 @@
 
     <string name="action_settings">Settings</string>
 
-    <string name="inc_disc_calls">Include discounted calls</string>
-    <string name="inc_disc_calls_summ">Include discounted calls in analytics</string>
+    <string name="inc_in_calls">Include incoming calls</string>
+    <string name="inc_in_calls_summ">Include incoming calls in analytics</string>
 
     <string-array name="bill_types">
         <item>PPM : Post Paid Mobile</item>
