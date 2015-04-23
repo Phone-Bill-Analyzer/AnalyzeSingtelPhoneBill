@@ -436,11 +436,62 @@ public class SBAApplication {
 
     public void downloadCSVData() {
 
-        File sd = Environment.getExternalStorageDirectory();
+        String query = "select case when cn.Name is null then cd.PhoneNo else cn.Name end as n, "
+                + "cd.* from BillCallDetails as cd "
+                + "left outer join ContactNames as cn on cd.PhoneNo = cn.PhoneNo ";
+
+        Cursor cursor = appDB.rawQuery(query);
+
+        File root = Environment.getExternalStorageDirectory();
+        File directory = new File(root, "/Android/data/AnalyzeSingTelPhoneBill");
+        File file = new File(directory, "BillInfo.csv");
+
+        if (directory.exists()){}
+        else{
+            directory.mkdirs();
+        }
 
         try {
+
+            FileOutputStream fos = new FileOutputStream(file);
+
+            String line = "BillNo,PhoneNo,ContactName,CallDate,CallTime,CallDuration,Amount," +
+                    "CallDirection,Comments,IsFreeCall,IsRoaming,IsSMS";
+
+            fos.write(line.getBytes());
+
+            if(cursor.moveToFirst()){
+
+                do{
+
+                    line = "";
+
+                    line = "\n" +
+                            cursor.getString(1) + "," +
+                            cursor.getString(2) + "," +
+                            cursor.getString(0) + "," +
+                            cursor.getString(3) + "," +
+                            cursor.getString(4) + "," +
+                            cursor.getFloat(5) + "," +
+                            cursor.getString(6) + "," +
+                            cursor.getString(7) + "," +
+                            cursor.getString(8) + "," +
+                            cursor.getString(9) + "," +
+                            cursor.getString(10) + "," +
+                            cursor.getString(11);
+
+                    fos.write(line.getBytes());
+
+                }while(cursor.moveToNext());
+
+            }
+
+            fos.close();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        cursor.close();
     }
 }

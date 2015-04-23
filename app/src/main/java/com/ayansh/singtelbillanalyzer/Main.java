@@ -103,11 +103,13 @@ public class Main extends Activity implements OnItemClickListener, Invoker {
 
         if (!Constants.isPremiumVersion()) {
             menu.findItem(R.id.Analyze).setVisible(false);
+            menu.findItem(R.id.DownloadCSV).setVisible(false);
         }
 
         if(billList.size() > 1 && billList.get(1).getPhoneNumber().contentEquals("81277490")){
             menu.findItem(R.id.DownloaDB).setVisible(true);
             menu.findItem(R.id.Analyze).setVisible(true);
+            menu.findItem(R.id.DownloadCSV).setVisible(true);
         }
         else{
             menu.findItem(R.id.DownloaDB).setVisible(false);
@@ -151,10 +153,12 @@ public class Main extends Activity implements OnItemClickListener, Invoker {
 
 		case R.id.DownloaDB:
 			SBAApplication.getInstance().downloaDBData();
+            Toast.makeText(this,"DB File Downloaded",Toast.LENGTH_LONG).show();
 			break;
 
         case R.id.DownloadCSV:
             SBAApplication.getInstance().downloadCSVData();
+            Toast.makeText(this,"CSV File Downloaded",Toast.LENGTH_LONG).show();
             break;
 
         case R.id.Analyze:
