@@ -358,10 +358,6 @@ public class SBAApplication {
 
     public void downloaDBData() {
 
-		/*
-		 * Add Permission also
-		 * <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-		 */
         File sd = Environment.getExternalStorageDirectory();
         File data = Environment.getDataDirectory();
         FileChannel source = null;
@@ -438,4 +434,13 @@ public class SBAApplication {
 
     }
 
+    public void downloadCSVData() {
+
+        File sd = Environment.getExternalStorageDirectory();
+
+        try {
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

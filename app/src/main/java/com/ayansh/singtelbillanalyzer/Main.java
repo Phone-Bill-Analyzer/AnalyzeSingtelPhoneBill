@@ -153,6 +153,10 @@ public class Main extends Activity implements OnItemClickListener, Invoker {
 			SBAApplication.getInstance().downloaDBData();
 			break;
 
+        case R.id.DownloadCSV:
+            SBAApplication.getInstance().downloadCSVData();
+            break;
+
         case R.id.Analyze:
             compareBills();
             break;

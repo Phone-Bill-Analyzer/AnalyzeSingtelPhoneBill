@@ -35,4 +35,10 @@
         android:title="@string/download_db">
     </item>
 
+    <item android:icon="@mipmap/ic_action_download"
+        android:id="@+id/DownloadCSV"
+        android:showAsAction="ifRoom"
+        android:title="@string/download_csv">
+    </item>
+
 </menu>

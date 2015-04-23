@@ -11,6 +11,7 @@
     <string name="select_file_name">Select a File</string>
     <string name="pwd_for_file">Password (If file is protected)</string>
     <string name="download_db">Download DB</string>
+    <string name="download_csv">Download as CSV File</string>
 
     <string name="action_settings">Settings</string>
 

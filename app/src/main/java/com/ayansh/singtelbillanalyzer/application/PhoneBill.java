@@ -482,7 +482,7 @@ public class PhoneBill {
                     data.put("date", cursor.getString(1));
                     data.put("time", cursor.getString(2));
                     data.put("amount", amount);
-                    data.put("direction", cursor.getString(3));
+                    data.put("direction", cursor.getString(4));
                     resultData.put(data);
 
                 } catch (JSONException e) {
