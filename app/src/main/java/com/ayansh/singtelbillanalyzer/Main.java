@@ -158,7 +158,7 @@ public class Main extends Activity implements OnItemClickListener, Invoker {
 
         case R.id.DownloadCSV:
             SBAApplication.getInstance().downloadCSVData();
-            Toast.makeText(this,"CSV File Downloaded",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"CSV File Downloaded in folder: Android/Data",Toast.LENGTH_LONG).show();
             break;
 
         case R.id.Analyze:

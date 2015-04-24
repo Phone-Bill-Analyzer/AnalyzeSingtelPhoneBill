@@ -11,8 +11,7 @@
 			
 				var data = new google.visualization.DataTable();
 				data.addColumn('string', 'Name');
-				data.addColumn('string', 'Date');
-				data.addColumn('string', 'Time');
+				data.addColumn('string', 'Date/Time');
 				data.addColumn('number', 'Amount');
 				data.addColumn('string', 'In/Out');
 				
@@ -20,7 +19,7 @@
 				
 				for(var i=0; i< jsonData.length; i++){
 					var amt = Math.round(jsonData[i].amount * 100) / 100;
-					data.addRow([jsonData[i].name,jsonData[i].date,jsonData[i].time,amt,jsonData[i].direction]);
+					data.addRow([jsonData[i].name,jsonData[i].date_time,amt,jsonData[i].direction]);
 				}
 
 				var control = new google.visualization.ControlWrapper({
@@ -36,7 +35,7 @@
 					containerId: 'chart_div',
 					chartType: 'Table',
 					view: {
-						columns: [0, 1, 2, 3, 4]
+						columns: [0, 1, 2, 3]
 					}
 				});
 

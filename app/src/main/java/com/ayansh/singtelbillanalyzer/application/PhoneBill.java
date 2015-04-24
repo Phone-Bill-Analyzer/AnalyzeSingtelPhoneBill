@@ -22,6 +22,7 @@ import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
@@ -467,6 +468,12 @@ public class PhoneBill {
         Cursor cursor = appDB.rawQuery(query);
 
         JSONArray resultData = new JSONArray();
+        ArrayList<JSONObject> resultList = new ArrayList<JSONObject>();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy hh:mma");
+        SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MMM HH:mm");
+        String date_time;
+        Date date;
 
         if(cursor.moveToFirst()){
 
@@ -479,13 +486,17 @@ public class PhoneBill {
                     double amt = cursor.getDouble(3);
                     float amount = (float) (Math.round(amt * 100.00) / 100.00);
                     data.put("name", cursor.getString(0));
-                    data.put("date", cursor.getString(1));
-                    data.put("time", cursor.getString(2));
+
+                    date = sdf.parse(cursor.getString(1) + " " +  cursor.getString(2));
+                    date_time = sdf1.format(date);
+
+                    data.put("date_time", date_time);
+                    data.put("timestamp", cursor.getString(1) + " " +  cursor.getString(2));
                     data.put("amount", amount);
                     data.put("direction", cursor.getString(4));
-                    resultData.put(data);
+                    resultList.add(data);
 
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     // Ignore.
                 }
 
@@ -494,6 +505,30 @@ public class PhoneBill {
         }
 
         cursor.close();
+
+        // Sort
+        Collections.sort(resultList, new Comparator<JSONObject>() {
+            @Override
+            public int compare(JSONObject lhs, JSONObject rhs) {
+
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy hh:mma");
+                Date lhsDate, rhsDate;
+
+                try {
+                    lhsDate = sdf.parse(lhs.getString("timestamp"));
+                    rhsDate = sdf.parse(rhs.getString("timestamp"));
+                    return lhsDate.compareTo(rhsDate);
+                } catch (Exception e) {
+                    // Ignore
+                    return 0;
+                }
+            }
+        });
+
+        Iterator<JSONObject> i = resultList.iterator();
+        while(i.hasNext()){
+            resultData.put(i.next());
+        }
 
         return resultData;
     }
