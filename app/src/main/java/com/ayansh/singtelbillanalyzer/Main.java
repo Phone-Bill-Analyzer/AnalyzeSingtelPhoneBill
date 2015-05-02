@@ -20,7 +20,8 @@ import com.ayansh.singtelbillanalyzer.application.ReloadContactsInfoCommand;
 import com.ayansh.singtelbillanalyzer.application.SBAApplication;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import org.varunverma.CommandExecuter.CommandExecuter;
 import org.varunverma.CommandExecuter.Invoker;
@@ -45,9 +46,9 @@ public class Main extends Activity implements OnItemClickListener, Invoker {
 		setContentView(R.layout.main);
 		
 		setTitle("Bill List");
-		
+
 		SBAApplication.getInstance().setContext(getApplicationContext());
-		
+
 		// Show Ads
 		if (!Constants.isPremiumVersion()) {
 
@@ -82,20 +83,6 @@ public class Main extends Activity implements OnItemClickListener, Invoker {
 		
 	}
 	
-	@Override
-	protected void onStart(){
-		
-		super.onStart();
-		GoogleAnalytics.getInstance(this).reportActivityStart(this);
-	}
-	
-	@Override
-	protected void onStop(){
-		
-		super.onStop();
-		GoogleAnalytics.getInstance(this).reportActivityStop(this);
-	}
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

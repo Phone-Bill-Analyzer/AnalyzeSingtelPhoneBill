@@ -11,7 +11,10 @@ import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.util.Log;
 
+import com.ayansh.singtelbillanalyzer.R;
 import com.ayansh.singtelbillanalyzer.SettingsActivity;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,6 +42,7 @@ public class SBAApplication {
 
     private Context context;
     private SBAApplicationDB appDB;
+    private Tracker tracker;
 
     HashMap<String, String> Options;
     private ArrayList<PhoneBill> phoneBillList;
@@ -81,6 +85,16 @@ public class SBAApplication {
     // Get all Options
     public HashMap<String, String> getOptions() {
         return Options;
+    }
+
+    public Tracker getTracker(){
+
+        if(tracker == null){
+            GoogleAnalytics analytics = GoogleAnalytics.getInstance(context);
+            tracker = analytics.newTracker(R.xml.global_tracker);
+        }
+
+        return tracker;
     }
 
     boolean includeIncomingCalls(){
