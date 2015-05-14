@@ -62,4 +62,11 @@ public class AppJavaScriptInterface {
 
     }
 
+    @JavascriptInterface
+    public String compareMonthlyDataUsage(){
+
+        return SBAApplication.getInstance().getMonthlyDataComparision().toString();
+
+    }
+
 }

@@ -65,7 +65,7 @@ public class CompareBills extends Activity implements OnItemSelectedListener {
 		analysisType = (Spinner) findViewById(R.id.analysis_type);
 		analysisType.setOnItemSelectedListener(this);
 
-        SpinnerAdapter adapter = ArrayAdapter.createFromResource(this,R.array.bill_comparision_types,android.R.layout.simple_spinner_item);
+        SpinnerAdapter adapter = ArrayAdapter.createFromResource(this,R.array.bill_comparision_types,android.R.layout.simple_spinner_dropdown_item);
         analysisType.setAdapter(adapter);
 
 		webView = (WebView) findViewById(R.id.webview);
@@ -146,9 +146,13 @@ public class CompareBills extends Activity implements OnItemSelectedListener {
 		
 		switch(pos){
 			
-		case 0:
-			getHTMLFromFile("compare_monthly_usage.html");
-			break;
+			case 0:
+				getHTMLFromFile("compare_monthly_usage.html");
+				break;
+
+			case 1:
+				getHTMLFromFile("compare_monthly_data_usage.html");
+				break;
 
 		}
 		

@@ -12,8 +12,11 @@
     <string name="pwd_for_file">Password (If file is protected)</string>
     <string name="download_db">Download DB</string>
     <string name="download_csv">Download as CSV File</string>
+    <string name="session_id">Session ID</string>
+    <string name="web_sync">Sync</string>
 
     <string name="action_settings">Settings</string>
+    <string name="web_analyze">Analyze on Web</string>
 
     <string name="inc_in_calls">Include incoming calls</string>
     <string name="inc_in_calls_summ">Include incoming calls in analytics</string>
@@ -31,6 +34,7 @@
     </string-array>
     <string-array name="bill_comparision_types">
         <item>Compare Monthly Usage</item>
+        <item>Compare Monthly Data Usage</item>
     </string-array>
 
 </resources>

@@ -113,7 +113,11 @@ public class Main extends Activity implements OnItemClickListener, Invoker {
 		case R.id.settings:
 			Intent settings = new Intent(Main.this, SettingsActivity.class);
 			Main.this.startActivity(settings);
-			
+			break;
+
+		case R.id.web:
+			Intent webSync = new Intent(Main.this, WebSync.class);
+			Main.this.startActivity(webSync);
 			break;
 			
 		case R.id.Help:

@@ -14,6 +14,11 @@
         android:showAsAction="ifRoom"
         android:title="@string/help"></item>
     <item
+        android:id="@+id/web"
+        android:icon="@mipmap/ic_action_web_site"
+        android:showAsAction="ifRoom"
+        android:title="@string/web_analyze" />
+    <item
         android:id="@+id/settings"
         android:icon="@mipmap/settings"
         android:showAsAction="ifRoom"
@@ -26,18 +31,18 @@
     <item
         android:id="@+id/About"
         android:icon="@mipmap/about"
-        android:showAsAction="ifRoom"
+        android:showAsAction="never"
         android:title="@string/about"></item>
 
     <item android:icon="@mipmap/ic_action_download"
         android:id="@+id/DownloaDB"
-        android:showAsAction="ifRoom"
+        android:showAsAction="never"
         android:title="@string/download_db">
     </item>
 
     <item android:icon="@mipmap/ic_action_download"
         android:id="@+id/DownloadCSV"
-        android:showAsAction="ifRoom"
+        android:showAsAction="never"
         android:title="@string/download_csv">
     </item>
 

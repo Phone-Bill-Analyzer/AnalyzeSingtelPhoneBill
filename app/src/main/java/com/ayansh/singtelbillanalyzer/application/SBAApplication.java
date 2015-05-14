@@ -42,7 +42,6 @@ public class SBAApplication {
 
     private Context context;
     private SBAApplicationDB appDB;
-    private Tracker tracker;
 
     HashMap<String, String> Options;
     private ArrayList<PhoneBill> phoneBillList;
@@ -73,7 +72,8 @@ public class SBAApplication {
             appDB.openDBForWriting();
             appDB.loadOptions();
 
-            // TODO Initialize Google Analytics
+            // Initialize Google Analytics
+            GoogleAnalytics.getInstance(context).newTracker(R.xml.global_tracker);
         }
 
     }
@@ -85,16 +85,6 @@ public class SBAApplication {
     // Get all Options
     public HashMap<String, String> getOptions() {
         return Options;
-    }
-
-    public Tracker getTracker(){
-
-        if(tracker == null){
-            GoogleAnalytics analytics = GoogleAnalytics.getInstance(context);
-            tracker = analytics.newTracker(R.xml.global_tracker);
-        }
-
-        return tracker;
     }
 
     boolean includeIncomingCalls(){
@@ -431,6 +421,47 @@ public class SBAApplication {
                     amt = cursor.getDouble(2);
                     amount = (float) (Math.round(amt * 100.00) / 100.00);
                     data.put("outamt", amount);
+
+                    resultData.put(data);
+
+                } catch (JSONException e) {
+                    // Ignore.
+                }
+
+            } while(cursor.moveToNext());
+
+        }
+
+        cursor.close();
+
+        return resultData;
+
+    }
+
+    public JSONArray getMonthlyDataComparision(){
+
+        SBAApplicationDB appDB = SBAApplicationDB.getInstance();
+
+        String query = "select bill.BillDate, ( sum(cd.CallDuration) / 1024 ) as data from " +
+                "BillMetaData as bill inner join BillCallDetails as cd on bill.BillNo = cd.BillNo " +
+                "where cd.PhoneNo = 'data' group by bill.BillDate order by bill.BillNo";
+
+        Cursor cursor = appDB.rawQuery(query);
+
+        JSONArray resultData = new JSONArray();
+
+        if(cursor.moveToFirst()){
+
+            do{
+
+                JSONObject data = new JSONObject();
+
+                try {
+
+                    data.put("date", cursor.getString(0));
+
+                    float data_usage = (float) (Math.round(cursor.getDouble(1) * 100.00) / 100.00);
+                    data.put("data", data_usage);
 
                     resultData.put(data);
 

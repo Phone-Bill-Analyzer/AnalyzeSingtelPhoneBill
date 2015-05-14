@@ -49,8 +49,6 @@ public class SplashScreen extends Activity implements IabHelper.OnIabSetupFinish
 
         app.setContext(getApplicationContext());
 
-        SBAApplication.getInstance().getTracker();
-
         if (!app.isEULAAccepted()) {
 
             Intent eula = new Intent(SplashScreen.this, Eula.class);

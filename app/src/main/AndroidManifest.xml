@@ -77,6 +77,15 @@
         </activity>
 
         <activity
+            android:name=".WebSync"
+            android:exported="false"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.WEB_SYNC" />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name=".SettingsActivity"
             android:exported="false"
             android:label="@string/app_name" >
