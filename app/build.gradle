@@ -8,8 +8,8 @@ android {
         applicationId "com.ayansh.singtelbillanalyzer"
         minSdkVersion 14
         targetSdkVersion 21
-        versionCode 6
-        versionName "1.0.6a"
+        versionCode 7
+        versionName "1.0.7a"
     }
     buildTypes {
         release {

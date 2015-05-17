@@ -67,6 +67,14 @@ public class WebSyncCommand extends Command {
 
 		JSONObject output = new JSONObject(builder.toString());
 
+		int error_code = output.getInt("ErrorCode");
+		if(error_code == 0){
+
+		}
+		else{
+			throw new Exception(output.getString("Message"));
+		}
+
 	}
 
 
@@ -89,7 +97,7 @@ public class WebSyncCommand extends Command {
 
 				object.put("BillNo",cursor.getString(cursor.getColumnIndex("BillNo")));
 				object.put("BillType", cursor.getString(cursor.getColumnIndex("BillType")));
-				object.put("PhoneNo", cursor.getString(cursor.getColumnIndex("PhoneNo")));
+				object.put("PhoneNumber", cursor.getString(cursor.getColumnIndex("PhoneNo")));
 				object.put("BillDate", cursor.getString(cursor.getColumnIndex("BillDate")));
 				object.put("FromDate", cursor.getString(cursor.getColumnIndex("FromDate")));
 				object.put("ToDate", cursor.getString(cursor.getColumnIndex("ToDate")));
@@ -117,18 +125,18 @@ public class WebSyncCommand extends Command {
 				object = new JSONObject();
 
 				object.put("BillNo",cursor.getString(cursor.getColumnIndex("BillNo")));
-				object.put("PhoneNo", cursor.getString(cursor.getColumnIndex("PhoneNo")));
-				object.put("CallDate", cursor.getString(cursor.getColumnIndex("CallDate")));
-				object.put("CallTime", cursor.getString(cursor.getColumnIndex("CallTime")));
-				object.put("CallDuration", cursor.getString(cursor.getColumnIndex("CallDuration")));
-				object.put("Amount", cursor.getFloat(cursor.getColumnIndex("Amount")));
-				object.put("CallDirection", cursor.getString(cursor.getColumnIndex("CallDirection")));
-				object.put("Comments", cursor.getString(cursor.getColumnIndex("Comments")));
-				object.put("IsFreeCall", cursor.getString(cursor.getColumnIndex("IsFreeCall")));
-				object.put("IsRoaming", cursor.getString(cursor.getColumnIndex("IsRoaming")));
-				object.put("IsSMS", cursor.getString(cursor.getColumnIndex("IsSMS")));
-				object.put("IsSTD", cursor.getString(cursor.getColumnIndex("IsSTD")));
-				object.put("Pulse", cursor.getInt(cursor.getColumnIndex("Pulse")));
+				object.put("phoneNumber", cursor.getString(cursor.getColumnIndex("PhoneNo")));
+				object.put("callDate", cursor.getString(cursor.getColumnIndex("CallDate")));
+				object.put("callTime", cursor.getString(cursor.getColumnIndex("CallTime")));
+				object.put("duration", cursor.getString(cursor.getColumnIndex("CallDuration")));
+				object.put("cost", cursor.getFloat(cursor.getColumnIndex("Amount")));
+				object.put("callDirection", cursor.getString(cursor.getColumnIndex("CallDirection")));
+				object.put("comments", cursor.getString(cursor.getColumnIndex("Comments")));
+				object.put("freeCall", cursor.getString(cursor.getColumnIndex("IsFreeCall")));
+				object.put("roamingCall", cursor.getString(cursor.getColumnIndex("IsRoaming")));
+				object.put("smsCall", cursor.getString(cursor.getColumnIndex("IsSMS")));
+				object.put("stdCall", cursor.getString(cursor.getColumnIndex("IsSTD")));
+				object.put("pulse", cursor.getInt(cursor.getColumnIndex("Pulse")));
 
 				callDetails.put(object);
 

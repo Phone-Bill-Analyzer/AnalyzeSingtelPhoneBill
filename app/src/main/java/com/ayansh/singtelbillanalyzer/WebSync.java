@@ -2,11 +2,15 @@ package com.ayansh.singtelbillanalyzer;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ayansh.singtelbillanalyzer.application.Constants;
@@ -56,6 +60,16 @@ public class WebSync extends Activity implements View.OnClickListener, Invoker {
 
         Button syncButton = (Button) findViewById(R.id.web_sync);
         syncButton.setOnClickListener(this);
+
+        String helpText = "<html>After synchronization, visit our " +
+                "<a href=\"http://apps.ayansh.com/Phone-Bill-Analyzer/analyze_bill.php\">Web App</a>" +
+                " for detailed analysis</html>";
+
+        WebView wv = (WebView) findViewById(R.id.help_text);
+        wv.loadData(helpText, "text/html", "utf-8");
+
+        wv.setOnClickListener(this);
+
     }
 
     @Override
@@ -100,6 +114,11 @@ public class WebSync extends Activity implements View.OnClickListener, Invoker {
 
             case R.id.web_sync:
                 webSync();
+                break;
+
+            case R.id.help_text:
+                Intent webAnalysis = new Intent(Intent.ACTION_VIEW, Uri.parse("http://apps.ayansh.com/Phone-Bill-Analyzer/analyze_bill.php"));
+                startActivity(webAnalysis);
                 break;
 
         }
