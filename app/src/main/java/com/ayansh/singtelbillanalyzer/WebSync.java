@@ -5,7 +5,10 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
@@ -13,22 +16,21 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ayansh.CommandExecuter.CommandExecuter;
+import com.ayansh.CommandExecuter.Invoker;
+import com.ayansh.CommandExecuter.ProgressInfo;
+import com.ayansh.CommandExecuter.ResultObject;
 import com.ayansh.singtelbillanalyzer.application.Constants;
 import com.ayansh.singtelbillanalyzer.application.SBAApplication;
 import com.ayansh.singtelbillanalyzer.application.WebSyncCommand;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.analytics.GoogleAnalytics;
-
-import org.varunverma.CommandExecuter.CommandExecuter;
-import org.varunverma.CommandExecuter.Invoker;
-import org.varunverma.CommandExecuter.ProgressInfo;
-import org.varunverma.CommandExecuter.ResultObject;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 /**
  * Created by varun on 5/14/15.
  */
-public class WebSync extends Activity implements View.OnClickListener, Invoker {
+public class WebSync extends AppCompatActivity implements View.OnClickListener, Invoker {
 
     private EditText sessionID;
     private ProgressDialog pd;
@@ -41,6 +43,10 @@ public class WebSync extends Activity implements View.OnClickListener, Invoker {
         setContentView(R.layout.web_sync);
 
         setTitle("Analyze on Web");
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Show Ads
         if (!Constants.isPremiumVersion()) {
@@ -73,17 +79,18 @@ public class WebSync extends Activity implements View.OnClickListener, Invoker {
     }
 
     @Override
-    protected void onStart(){
+    public boolean onOptionsItemSelected(MenuItem item) {
 
-        super.onStart();
-        GoogleAnalytics.getInstance(this).reportActivityStart(this);
-    }
+        switch (item.getItemId()) {
 
-    @Override
-    protected void onStop(){
+            case android.R.id.home:
+                finish();
+                return true;
 
-        super.onStop();
-        GoogleAnalytics.getInstance(this).reportActivityStop(this);
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
     }
 
     @Override
@@ -136,6 +143,12 @@ public class WebSync extends Activity implements View.OnClickListener, Invoker {
         pd.setMax(100);
 
         ce.execute(command);
+
+        // Log Firebase Event
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "web_sync");
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "web_sync");
+        SBAApplication.getInstance().getFirebaseAnalytics().logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
     }
 }

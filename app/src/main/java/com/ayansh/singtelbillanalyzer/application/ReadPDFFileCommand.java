@@ -2,10 +2,10 @@ package com.ayansh.singtelbillanalyzer.application;
 
 import android.net.Uri;
 
-import org.varunverma.CommandExecuter.Command;
-import org.varunverma.CommandExecuter.Invoker;
-import org.varunverma.CommandExecuter.ProgressInfo;
-import org.varunverma.CommandExecuter.ResultObject;
+import com.ayansh.CommandExecuter.Command;
+import com.ayansh.CommandExecuter.Invoker;
+import com.ayansh.CommandExecuter.ProgressInfo;
+import com.ayansh.CommandExecuter.ResultObject;
 
 import java.util.ArrayList;
 

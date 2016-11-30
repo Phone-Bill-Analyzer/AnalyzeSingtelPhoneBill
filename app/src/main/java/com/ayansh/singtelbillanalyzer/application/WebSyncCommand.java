@@ -1,23 +1,27 @@
 package com.ayansh.singtelbillanalyzer.application;
 
 import android.database.Cursor;
+import android.net.Uri;
+
+import com.ayansh.CommandExecuter.Command;
+import com.ayansh.CommandExecuter.Invoker;
+import com.ayansh.CommandExecuter.ResultObject;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.varunverma.CommandExecuter.Command;
-import org.varunverma.CommandExecuter.Invoker;
-import org.varunverma.CommandExecuter.ResultObject;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,29 +39,34 @@ public class WebSyncCommand extends Command {
 	@Override
 	protected void execute(ResultObject result) throws Exception {
 
-		String url = "http://apps.ayansh.com/Phone-Bill-Analyzer/sync_from_mobile.php";
+		String postURL = "http://apps.ayansh.com/Phone-Bill-Analyzer/sync_from_mobile.php";
+
+		URL url = new URL(postURL);
+		HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+		urlConnection.setDoOutput(true);
+		urlConnection.setChunkedStreamingMode(0);
+		urlConnection.setRequestMethod("POST");
 
 		JSONObject input = getDataForSync();
 
-		// Create a new HttpClient and Post Header
-		HttpClient httpclient = new DefaultHttpClient();
-		HttpPost httppost = new HttpPost(url);
+		Uri.Builder uriBuilder = new Uri.Builder()
+				.appendQueryParameter("session_id", sid)
+				.appendQueryParameter("data", input.toString());
 
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-		nameValuePairs.add(new BasicNameValuePair("session_id", sid));
-		nameValuePairs.add(new BasicNameValuePair("data", input.toString()));
-		httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+		String parameterQuery = uriBuilder.build().getEncodedQuery();
 
-		// Execute HTTP Post Request
-		HttpResponse response = httpclient.execute(httppost);
+		OutputStream os = urlConnection.getOutputStream();
+		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+		writer.write(parameterQuery);
+		writer.flush();
+		writer.close();
+		os.close();
 
-		// Open Stream for Reading.
-		InputStream is = response.getEntity().getContent();
+		urlConnection.connect();
 
-		// Get Input Stream Reader.
-		InputStreamReader isr = new InputStreamReader(is);
-
-		BufferedReader reader = new BufferedReader(isr);
+		InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
 		StringBuilder builder = new StringBuilder();
 		String line;

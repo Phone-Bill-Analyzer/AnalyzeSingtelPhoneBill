@@ -1,48 +1,49 @@
-<menu xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    tools:ignore="AppCompatResource">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Main">
 
     <item
         android:id="@+id/Analyze"
         android:icon="@mipmap/analyze"
-        android:showAsAction="ifRoom"
-        android:title="@string/help"></item>
+        app:showAsAction="ifRoom"
+        android:title="@string/compare_bills"></item>
 
     <item
         android:id="@+id/Help"
         android:icon="@mipmap/help"
-        android:showAsAction="ifRoom"
+        app:showAsAction="ifRoom"
         android:title="@string/help"></item>
     <item
         android:id="@+id/web"
         android:icon="@mipmap/ic_action_web_site"
-        android:showAsAction="ifRoom"
+        app:showAsAction="ifRoom"
         android:title="@string/web_analyze" />
     <item
         android:id="@+id/settings"
         android:icon="@mipmap/settings"
-        android:showAsAction="ifRoom"
+        app:showAsAction="ifRoom"
         android:title="@string/action_settings" />
     <item
         android:id="@+id/ReloadContacts"
         android:icon="@mipmap/ic_action_refresh"
-        android:showAsAction="withText"
+        app:showAsAction="withText"
         android:title="@string/reload_contacts"></item>
     <item
         android:id="@+id/About"
         android:icon="@mipmap/about"
-        android:showAsAction="never"
+        app:showAsAction="never"
         android:title="@string/about"></item>
 
     <item android:icon="@mipmap/ic_action_download"
         android:id="@+id/DownloaDB"
-        android:showAsAction="never"
+        app:showAsAction="never"
         android:title="@string/download_db">
     </item>
 
     <item android:icon="@mipmap/ic_action_download"
         android:id="@+id/DownloadCSV"
-        android:showAsAction="never"
+        app:showAsAction="never"
         android:title="@string/download_csv">
     </item>
 

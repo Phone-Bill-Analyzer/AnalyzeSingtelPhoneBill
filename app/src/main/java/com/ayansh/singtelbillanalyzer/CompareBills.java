@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,7 +24,6 @@ import com.ayansh.singtelbillanalyzer.application.PhoneBill;
 import com.ayansh.singtelbillanalyzer.application.SBAApplication;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.analytics.GoogleAnalytics;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,7 +31,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 @SuppressLint("SetJavaScriptEnabled")
-public class CompareBills extends Activity implements OnItemSelectedListener {
+public class CompareBills extends AppCompatActivity implements OnItemSelectedListener {
 
 	private WebView webView;
 	private String htmlText;
@@ -45,7 +46,11 @@ public class CompareBills extends Activity implements OnItemSelectedListener {
 		setContentView(R.layout.bill_analysis);
 		
 		setTitle("Compare Bills");
-				
+
+		Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+		setSupportActionBar(myToolbar);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 		// Show Ads
 		if (!Constants.isPremiumVersion()) {
 
@@ -59,8 +64,6 @@ public class CompareBills extends Activity implements OnItemSelectedListener {
 			// Start loading the ad in the background.
 			adView.loadAd(adRequest);
 		}
-
-        getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		analysisType = (Spinner) findViewById(R.id.analysis_type);
 		analysisType.setOnItemSelectedListener(this);
@@ -93,20 +96,6 @@ public class CompareBills extends Activity implements OnItemSelectedListener {
         }
 
     }
-	
-	@Override
-	protected void onStart(){
-		
-		super.onStart();
-		GoogleAnalytics.getInstance(this).reportActivityStart(this);
-	}
-	
-	@Override
-	protected void onStop(){
-		
-		super.onStop();
-		GoogleAnalytics.getInstance(this).reportActivityStop(this);
-	}
 	
 	private void showFromRawSource() {
 		

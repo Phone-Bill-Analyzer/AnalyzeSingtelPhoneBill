@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AnalyzeSingtelPhoneBill.iml" filepath="$PROJECT_DIR$/AnalyzeSingtelPhoneBill.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ASB.iml" filepath="$PROJECT_DIR$/ASB.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CommandExecuter/CommandExecuter.iml" filepath="$PROJECT_DIR$/CommandExecuter/CommandExecuter.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

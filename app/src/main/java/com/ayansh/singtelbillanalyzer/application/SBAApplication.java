@@ -11,10 +11,8 @@ import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.util.Log;
 
-import com.ayansh.singtelbillanalyzer.R;
 import com.ayansh.singtelbillanalyzer.SettingsActivity;
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.Tracker;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,6 +43,7 @@ public class SBAApplication {
 
     HashMap<String, String> Options;
     private ArrayList<PhoneBill> phoneBillList;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     private SBAApplication(){
         Options = new HashMap<String, String>();
@@ -72,14 +71,18 @@ public class SBAApplication {
             appDB.openDBForWriting();
             appDB.loadOptions();
 
-            // Initialize Google Analytics
-            GoogleAnalytics.getInstance(context).newTracker(R.xml.global_tracker);
+            mFirebaseAnalytics = FirebaseAnalytics.getInstance(c);
+
         }
 
     }
 
     public Context getContext() {
         return context;
+    }
+
+    public FirebaseAnalytics getFirebaseAnalytics(){
+        return mFirebaseAnalytics;
     }
 
     // Get all Options
