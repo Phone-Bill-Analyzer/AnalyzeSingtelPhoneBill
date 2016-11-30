@@ -1,12 +1,14 @@
 package com.ayansh.singtelbillanalyzer;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceFragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
-
-public class SettingsActivity extends PreferenceActivity {
+public class SettingsActivity extends AppCompatActivity {
 
 	public static final String INC_INCOMING_CALLS = "include_incoming_calls";
 	
@@ -15,25 +17,15 @@ public class SettingsActivity extends PreferenceActivity {
     public void onCreate(Bundle savedInstanceState) {
 		
         super.onCreate(savedInstanceState);
-                
-        addPreferencesFromResource(R.xml.preferences);
+        setContentView(R.layout.settings);
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        getFragmentManager().beginTransaction().replace(R.id.content_frame, new MyPreferenceFragment()).commit();
+
     }
-	
-	@Override
-	protected void onStart(){
-		
-		super.onStart();
-		GoogleAnalytics.getInstance(this).reportActivityStart(this);
-	}
-	
-	@Override
-	protected void onStop(){
-		
-		super.onStop();
-		GoogleAnalytics.getInstance(this).reportActivityStop(this);
-	}
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -49,5 +41,15 @@ public class SettingsActivity extends PreferenceActivity {
         }
 
     }
-	
+
+    public static class MyPreferenceFragment extends PreferenceFragment {
+
+        @Override
+        public void onCreate(final Bundle savedInstanceState){
+
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.preferences);
+        }
+
+    }
 }

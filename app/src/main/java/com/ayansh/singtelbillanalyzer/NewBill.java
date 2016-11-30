@@ -8,6 +8,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.OpenableColumns;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,23 +20,22 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ayansh.CommandExecuter.CommandExecuter;
+import com.ayansh.CommandExecuter.Invoker;
+import com.ayansh.CommandExecuter.ProgressInfo;
+import com.ayansh.CommandExecuter.ResultObject;
 import com.ayansh.singtelbillanalyzer.application.Constants;
 import com.ayansh.singtelbillanalyzer.application.PhoneBill;
 import com.ayansh.singtelbillanalyzer.application.ReadPDFFileCommand;
 import com.ayansh.singtelbillanalyzer.application.SBAApplication;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.analytics.GoogleAnalytics;
-
-import org.varunverma.CommandExecuter.CommandExecuter;
-import org.varunverma.CommandExecuter.Invoker;
-import org.varunverma.CommandExecuter.ProgressInfo;
-import org.varunverma.CommandExecuter.ResultObject;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.io.File;
 import java.util.Iterator;
 
-public class NewBill extends Activity implements OnClickListener, Invoker {
+public class NewBill extends AppCompatActivity implements OnClickListener, Invoker {
 	
 	private EditText fileName, password;
 	private Uri fileURI;
@@ -51,8 +52,10 @@ public class NewBill extends Activity implements OnClickListener, Invoker {
 
         setTitle("Upload Bill");
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-		
+		Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+		setSupportActionBar(myToolbar);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 		// Show Ads
 		if (!Constants.isPremiumVersion()) {
 
@@ -98,20 +101,6 @@ public class NewBill extends Activity implements OnClickListener, Invoker {
 
     }
 
-	@Override
-	protected void onStart(){
-		
-		super.onStart();
-		GoogleAnalytics.getInstance(this).reportActivityStart(this);
-	}
-	
-	@Override
-	protected void onStop(){
-		
-		super.onStop();
-		GoogleAnalytics.getInstance(this).reportActivityStop(this);
-	}
-	
 	private void showHelp() {
 		
 		String help = "Please Note : \n" +
@@ -242,6 +231,12 @@ public class NewBill extends Activity implements OnClickListener, Invoker {
 		pd.setMax(100);
 		
 		ce.execute(command);
+
+		// Log Firebase Event
+		Bundle bundle = new Bundle();
+		bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "bill_upload");
+		bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "bill_upload");
+		SBAApplication.getInstance().getFirebaseAnalytics().logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 		
 	}
 

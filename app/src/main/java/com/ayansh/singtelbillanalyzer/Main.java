@@ -5,6 +5,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,24 +16,21 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.ayansh.CommandExecuter.CommandExecuter;
+import com.ayansh.CommandExecuter.Invoker;
+import com.ayansh.CommandExecuter.ProgressInfo;
+import com.ayansh.CommandExecuter.ResultObject;
 import com.ayansh.singtelbillanalyzer.application.Constants;
 import com.ayansh.singtelbillanalyzer.application.PhoneBill;
 import com.ayansh.singtelbillanalyzer.application.ReloadContactsInfoCommand;
 import com.ayansh.singtelbillanalyzer.application.SBAApplication;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-
-import org.varunverma.CommandExecuter.CommandExecuter;
-import org.varunverma.CommandExecuter.Invoker;
-import org.varunverma.CommandExecuter.ProgressInfo;
-import org.varunverma.CommandExecuter.ResultObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Main extends Activity implements OnItemClickListener, Invoker {
+public class Main extends AppCompatActivity implements OnItemClickListener, Invoker {
 	
 	private ListView listView;
 	private BillListAdapter adapter;
@@ -49,6 +48,9 @@ public class Main extends Activity implements OnItemClickListener, Invoker {
 
 		SBAApplication.getInstance().setContext(getApplicationContext());
 
+		Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+		setSupportActionBar(myToolbar);
+
 		// Show Ads
 		if (!Constants.isPremiumVersion()) {
 
@@ -61,6 +63,10 @@ public class Main extends Activity implements OnItemClickListener, Invoker {
 
 			// Start loading the ad in the background.
 			adView.loadAd(adRequest);
+
+			// Request InterstitialAd
+			MyInterstitialAd.getInterstitialAd(this);
+			MyInterstitialAd.requestNewInterstitial();
 		}
 		
 		// Initialize Preferences

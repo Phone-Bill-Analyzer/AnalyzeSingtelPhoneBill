@@ -1,8 +1,8 @@
 package com.ayansh.singtelbillanalyzer.application;
 
-import org.varunverma.CommandExecuter.Command;
-import org.varunverma.CommandExecuter.Invoker;
-import org.varunverma.CommandExecuter.ResultObject;
+import com.ayansh.CommandExecuter.Command;
+import com.ayansh.CommandExecuter.Invoker;
+import com.ayansh.CommandExecuter.ResultObject;
 
 public class ReloadContactsInfoCommand extends Command {
 

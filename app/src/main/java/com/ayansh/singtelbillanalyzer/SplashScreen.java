@@ -13,7 +13,6 @@ import com.ayansh.singtelbillanalyzer.util.IabHelper;
 import com.ayansh.singtelbillanalyzer.util.IabResult;
 import com.ayansh.singtelbillanalyzer.util.Inventory;
 import com.ayansh.singtelbillanalyzer.util.Purchase;
-import com.google.android.gms.analytics.GoogleAnalytics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,20 +60,6 @@ public class SplashScreen extends Activity implements IabHelper.OnIabSetupFinish
             startSplashScreenActivity();
         }
 
-    }
-
-    @Override
-    protected void onStart(){
-
-        super.onStart();
-        GoogleAnalytics.getInstance(this).reportActivityStart(this);
-    }
-
-    @Override
-    protected void onStop(){
-
-        super.onStop();
-        GoogleAnalytics.getInstance(this).reportActivityStop(this);
     }
 
     private void startSplashScreenActivity() {

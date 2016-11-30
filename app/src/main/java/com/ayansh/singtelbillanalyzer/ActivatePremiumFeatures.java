@@ -8,6 +8,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -22,13 +24,13 @@ import com.ayansh.singtelbillanalyzer.util.IabHelper;
 import com.ayansh.singtelbillanalyzer.util.IabHelper.OnIabPurchaseFinishedListener;
 import com.ayansh.singtelbillanalyzer.util.IabResult;
 import com.ayansh.singtelbillanalyzer.util.Purchase;
-import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 /**
  * @author varun
  *
  */
-public class ActivatePremiumFeatures extends Activity implements
+public class ActivatePremiumFeatures extends AppCompatActivity implements
 		OnClickListener, OnIabPurchaseFinishedListener {
 
 	private TextView prodName, prodDesc, prodHelp;
@@ -40,6 +42,10 @@ public class ActivatePremiumFeatures extends Activity implements
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.premium_features);
+
+		Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+		setSupportActionBar(myToolbar);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 				
 		prodName = (TextView) findViewById(R.id.product_name);
 		prodDesc = (TextView) findViewById(R.id.product_desc);
@@ -51,7 +57,11 @@ public class ActivatePremiumFeatures extends Activity implements
 		cancel = (Button) findViewById(R.id.cancel);
 		cancel.setOnClickListener(this);
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+		// Log Firebase Event
+		Bundle bundle = new Bundle();
+		bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "premium_user");
+		bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Premium User");
+		SBAApplication.getInstance().getFirebaseAnalytics().logEvent(FirebaseAnalytics.Event.PRESENT_OFFER, bundle);
 				
 	}
 	
@@ -59,9 +69,7 @@ public class ActivatePremiumFeatures extends Activity implements
 	protected void onStart() {
 		
 		super.onStart();
-		
-		GoogleAnalytics.getInstance(this).reportActivityStart(this);
-		
+
 		billingHelper = IabHelper.getInstance();
 		
 		if(billingHelper == null){
@@ -219,10 +227,5 @@ public class ActivatePremiumFeatures extends Activity implements
 		finish();
 		
 	}
-	
-	@Override
-	public void onStop() {
-		super.onStop();
-		GoogleAnalytics.getInstance(this).reportActivityStop(this);
-	}
+
 }
